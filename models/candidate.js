@@ -8,16 +8,14 @@ const candidateSchema = new Schema({
     username:{
         type:String
     },
-    phone: {
-        type:String,
-        required:true,
-        unique:true
-    },
     email:{
         type:String
     },
     course:{
         type:String
+    },
+    phone: {
+        type:String,
     },
     password:{
         type:String

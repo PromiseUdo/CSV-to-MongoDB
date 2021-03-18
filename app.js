@@ -9,7 +9,7 @@ const results = [];
 const app = express();
 
 //connection to the database
-mongoose.connect('mongodb://localhost:27017/csvproject', {
+mongoose.connect('mongodb://localhost:27017/csvData', {
         useNewUrlParser: true, 
         useCreateIndex:true,
         useUnifiedTopology: true,
@@ -37,12 +37,11 @@ const upload = multer({
     storage:fileStorageEngine
 });
 
-//checking if the file exists
 
 const path = './csv/data.csv'
 
 
-app.post('/single', upload.single('candidates'),  async (req, res)=>{
+app.post('/upload', upload.single('candidates'),  async (req, res)=>{
     // console.log(req.file);
     res.send("CSV file successfull");
 try {
@@ -57,7 +56,7 @@ try {
           console.log(results);
         for(let person of results){
             //generate a random password for each candidate
-            const password = ticketId => Math.floor(Math.random() * 999999) + 10000;
+            const password = passwordId => Math.floor(Math.random() * 999999) + 10000;
             //pass along side the data form Excel the password for each candidate
             const newCandidate = new Candidate({...person, password:`LOC${password()}`});
             //save the candidate to the database
@@ -74,7 +73,7 @@ try {
 
 app.get("/", (req, res)=>{
     res.sendFile(__dirname + "/index.html");
-})
+});
 
 app.listen(3000, ()=>{
     console.log("App started on port 3000");
